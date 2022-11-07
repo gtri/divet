@@ -1,0 +1,47 @@
+class Registers
+	This class is used to store all the state information for a processor
+	def __init__(self):
+	
+	def getRegister(self,name):
+		Returns value, taint of the named register
+		Individual register names should include status flags that will be individually 
+		displayed and set.
+	
+	def setRegister(self,name,value,taint):
+		Set the value and taint of the specified register.
+		Individual register names should include status flags that will be individually 
+		displayed and set.
+		
+	def getRegistersDefinition(self):
+		Returns [ [CategoryName, [[name, display name, bit width], ...]], ... ]
+		This is used to create the registers GUI.
+	
+	def reset(self):
+		Reset the processor state
+	
+	def getProgramCounter(self):
+		Return the address of the next instruction to be executed
+
+	def getStackPointerName(self):
+		Return the stack pointer name
+	
+	def getState(self):
+		Returns a blob (currently implmeneted as a string, but could be complex data structure)
+		representing the current state of the processor
+	
+	def setState(self,state):
+		Restore a state that was previously retrieved using getState()
+
+class CPU:
+	def __init__(self,registers,memory):
+		registers is an instance of the Registers class specified to this processor
+		memory is an instance of the EmulatedMemory class that will be used to emulate the memory 
+	
+	def getSignals(self):
+		return a list of interrupts/signals representing external inputs to processor
+		
+	def signal(self,signalName):
+		send the processor an interrupt/signal
+		
+	def step(self):
+		Execute a single instruction

@@ -1,0 +1,19 @@
+Break Condition Syntax
+======================
+script     := access [condition] watchValue 
+access     := memAccess | regAccess | bpAccess
+memAccess  := accessType [bankName] target
+regAccess  := "REG" registerName
+bpAccess   := "BP"
+accessType := "R" | "W" | "RW"
+target     := range | set
+range      := start - end
+start      := "MIN" | symbolName | address
+end        := "MAX" | symbolName | address
+set        := item[, item[, item[...]]]
+item       := symbolName | address
+condition  := "<=" | "<" | "==" | ">=" | ">"
+watchValue := value [tainted] 
+address    := "[0x]{0,1}[0-F]+"
+value      := "0x[0-F]+" | "[0-9]+" | "*"
+tainted    := "T" | "U" 

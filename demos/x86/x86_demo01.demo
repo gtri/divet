@@ -1,0 +1,47 @@
+[Registers]
+eax: 0xf7f90dd8
+ebx: 0x00000000
+ecx: 0xf9ff2579
+edx: 0xffffcea4
+edi: 0x00000000
+esi: 0xf7f8f000
+ebp: 0xffffce78
+esp: 0xffffce74
+eip: 0x00010501
+
+[Memory]
+default: 00
+MEM: 000105f0, 1, t, 
+MEM: 000105f1, 1, t, 
+MEM: 000105f2, 1, t, 
+MEM: 000105f3, 1, t, 
+MEM: 000105f4, 1, t, 
+MEM: 000105f5, 1, t, 
+MEM: 000105f6, 1, t, 
+MEM: 000105f7, 1, t, 
+MEM: 000105f8, 1, t, 
+MEM: 000105f9, 1, t, 
+MEM: 000105fa, 1, t, 
+MEM: 000105fb, 1, t, 
+MEM: 000105fc, 1, t, 
+MEM: 000105fd, 1, t, 
+MEM: 000105fe, 1, t, 
+MEM: 000105ff, 1, t, 
+MEM: 00010600, 1, t, 
+MEM: 00010601, 1, t, 
+MEM: 00010602, 1, t, 
+MEM: 00010603, 1, t, 
+MEM: 00010604, 1, t, 
+MEM: 00010605, 1, t, 
+MEM: 00010606, 1, t, 
+MEM: 00010607, 1, t, 
+MEM: 00010608, 1, t, 
+MEM: 00010609, 1, t, 
+MEM: 0001060a, 1, t,
+MEM: 0001060b, 1, t,
+
+[Break]
+E:BP 00010563
+E:R 000105f0-0001060b
+
+

@@ -1,0 +1,234 @@
+=======================
+= Scripting Interface =
+=======================
+
+Register access
+===============
+
+getReg(regName, withTaint=False)
+	Returns the current value (and optionally taint) of the named register
+	
+setReg(regName, value, taint=0)
+	Sets the current value and taint of the named register
+	
+resetCpu()
+	Resets all registers to their default values
+
+
+Memory Access
+=============
+
+setBank(bankName)
+	Sets the name of the bank to use in other api methods when bankName is sepcified as None
+	
+getByte(address, withTaint=False, bankName=None)
+	Returns the value (and optionally taint) of the byte stored at the address of the named memory bank 
+
+getWord(address, withTaint=False, bankName=None)
+	Returns the value (and optionally taint) of the 2 byte word stored at the address of the named memory bank
+	
+getDword(address, withTaint=False, bankName=None)
+	Returns the value (and optionally taint) of the 4 byte doubleword stored at the address of the named memory bank
+
+getQword(address, withTaint=False, bankName=None)	
+	Returns the value (and optionally taint) of the 8 byte quadword stored at the address of the named memory bank
+
+getByteRV(address, bankName=None)
+	Returns the 1 byte, round-robin Read Values set for the given address of the named memory bank 
+
+getWordRV(address, bankName=None)
+	Returns the 2 byte word, round-robin Read Values set for the given address of the named memory bank
+
+getDwordRV(address, bankName=None)
+	Returns the 4 byte doubleword, round-robin Read Values set for the given address of the named memory bank
+
+getQwordRV(address, bankName=None)
+	Returns the 8 byte quadword, round-robin Read Values set for the given address of the named memory bank
+
+getStruct(address, fmt, withTaint=False, bankName=None)
+	Returns the values (and optionally combined taint) of the data structure stored at the address of the named memory bank
+	The fmt argument is the same as the the fmt argument in the struct module
+
+getString(address, withTaint=False, bankName=None)
+	Returns the value (and optionally combined taint) of the null-terminated string stored at the address of the named memory bank
+
+setByte(address, value, taint=0, bankName=None)
+	Sets the current byte value and taint stored at the address of the named memory bank
+	
+setWord(address, taint=0, bankName=None)
+	Sets the current 2 byte word value and taint stored at the address of the named memory bank
+
+setDword(address, taint=0, bankName=None)
+	Sets the current 4 byte doubleword value and taint stored at the address of the named memory bank
+
+setQword(address, taint=0, bankName=None)	
+	Sets the current 8 byte quadword value and taint stored at the address of the named memory bank
+
+setByteRV(address, values, bankName=None)
+	Sets a series of 1 byte, round-robin Read Values for the given address of the named memory bank 
+
+setWordRV(address, values, bankName=None)
+	Sets a series of 2 byte word, round-robin Read Values for the given address of the named memory bank 
+
+setDwordRV(address, values, bankName=None)
+	Sets a series of 4 byte doubleword, round-robin Read Values for the given address of the named memory bank 
+
+setQwordRV(address, values, bankName=None)
+	Sets a series of 8 byte quadword, round-robin Read Values for the given address of the named memory bank 
+
+setStruct(self, address, fmt, ..., taint=0, bankName=None):
+	Sets the current values and taint the data structure stored at the address of the named memory bank
+	The fmt argument is the same as the the fmt argument in the struct module
+	The taint and bank arguments must be passed as named/keyword arguments
+
+setString(address, s, taint=0, bankName=None)
+	Sets the value and taint of the null-terminated string stored at the address of the named memory bank
+
+setAssembly(address, listing, taint=0, bankName=None)
+	Assembles the specified program listing starting at the given address from the named memory bank
+	The listing can be given as a newline seperated assembly listing, or as a list/tuple of assembly instruction strings
+	
+setMutable(address, mutable=True, bankName=None)
+	Configures a memory cell as Writable or Read Only (mutable=True is Writable)
+	
+isMutable(address, bankName=None)
+	Returns a boolean indicating if the addressed memory cell is writable
+	
+resetMem()
+	Resets the emulated memory, removing all stored values and resetting read indexes
+
+getSym(symbolName)
+	Returns the address of the named symbol.  Returns None if the symbol can not be found.
+
+
+Execution Control
+=================	
+
+step(handleBreaks=False)
+	Execute a single instruction.  Break conditions will always be checked when performing a single step, and can be 
+	reviewed using isBrk or getBrk.  However, callbacks will only be called if handleBreaks is specified as True.
+	
+unstep(handleBreaks=False)
+	Undo the execution of a single instruction.  Break conditions will always be checked when performing a single unstep, 
+	and can be reviewed using isBrk or getBrk.  However, callbacks will only be called if handleBreaks is specified as True.
+	
+run()
+	Execute instructions until a break condition occurs or the user pressed the Break button.  When one or more break conditions 
+	occurs, callback methods will be called.  If any callback fails to return True then execution will end.
+
+setSpeed(skip)
+	The emulator will, by default, update the user interface every execution step.  The emulator speed can be 
+	increased by skipping the user interface update for a number of excution steps.  This method sets the
+	number of execution steps where the user interface update is skipped.
+	
+setCB(callback)
+	Set a method that will be executed whenever one or more break conditions occurs (not when the user presses the Break button).
+	This callback method must return True if execution is continue, or False if execution should be stopped.  This callback will
+	be call after any callbacks that were specified for specified break conditions.
+	
+addBrk(script,description=None,callback=None)
+	Add a break condition based upon a script definition.  An optional textual description of the break point may also be given.
+	An optional callback can be specified that will be called whenever this break condition is met.  This callback must return
+	True if execution is to continue.
+	
+	Returns an ID that can be used to refer to this break condition in other methods.
+	
+	The complete syntax of the break definition script is:
+	
+		script     := access [condition] watchValue 
+		access     := memAccess | regAccess | bpAccess
+		memAccess  := accessType [bankName] target
+		regAccess  := "REG" registerName
+		bpAccess   := "BP"
+		accessType := "R" | "W" | "RW"
+		target     := range | set
+		range      := start - end
+		start      := "MIN" | symbolName | address
+		end        := "MAX" | symbolName | address
+		set        := item[, item[, item[...]]]
+		item       := symbolName | address
+		condition  := "<=" | "<" | "==" | ">=" | ">"
+		watchValue := value [tainted] 
+		address    := "[0x]{0,1}[0-F]+"
+		value      := "0x[0-F]+" | "[0-9]+" | "*"
+		tainted    := "T" | "U" 
+	
+	Examples:
+		"BP 8004DC"              (Break before executing instruction at address 0x8004DC)
+		"R A00100-A00200 == 200" (Break after the value 200 is read from the address range 0xA00100-0xA00200)
+
+enaBrk(id)
+	Enables the break condition with the specified ID
+	
+disBrk(id)
+	Disables the break condition with the specified ID
+
+rmBrk(id)
+	Removes the break condition with the specified ID
+	
+isBrk(id)
+	Return True if the break condition with the specified ID was met by the last execution step
+	
+getBrk()
+	Returns a list of IDs for break conditions that were met by the last execution step
+
+clrBrk()
+	Removes all break conditions
+
+
+Watch Memory Control
+====================
+
+watchByte(address, bankName=None)
+	Add the byte at the sepcified address in the name memory bank to the watch list
+
+watchWord(address, bankName=None)
+	Add the 2 byte word at the sepcified address in the name memory bank to the watch list
+	
+watchDword(address, bankName=None)
+	Add the 4 byte doubleword at the sepcified address in the name memory bank to the watch list
+
+watchQword(address, bankName=None)
+	Add the 8 byte quadword at the sepcified address in the name memory bank to the watch list
+
+clrWatch()
+	Clears all entries from the watch list
+	
+File Access
+===========
+
+startTrace(path)
+	Starts recording execution information to the specified file
+	
+stopTrace()
+	Stops recording execution inforamtion
+	
+saveState(path)
+	Saves the processor and memory state to the specified file
+
+loadState(path)
+	Restores the processor and memory state from the specified file
+
+
+Ghidra Database Modification
+============================
+
+patchBytes(address, patchBytes)
+	Patch the Ghidra Database at the given address with the given bytes.
+	The patchBytes argument can be given as either a string or list of numbers (0-255).
+	
+patchProg(address, listing)
+	Patch the Ghidra Databse at the given address with the given assembly listing
+	The listing can be given as a newline seperated assembly listing, or as a list/tuple of assembly instruction strings
+	
+	
+Assembly
+========
+
+assemble(address, listing, useContextReg=False)
+	Assembles the specified program listing starting at the given address and returns the bytes
+	The listing can be given as a newline seperated assembly listing, or as a list/tuple of assembly instruction strings
+	If useContextReg is True, then the current state of the processor's context register is used, if one exists.  Otherwise, 
+	the context register values set in the Ghidra database at each instruction address is used if available
+	This method does not change memory or the Ghidra database
+	

@@ -1,0 +1,46 @@
+[Registers]
+eax: 0x55555555461a
+rbx: 0x000000000000
+rcx: 0x555555554680
+rdx: 0x7fffffffdd88
+rdi: 0x000000000001
+rsi: 0x7fffffffdd78
+rbp: 0x7fffffffdc90
+rsp: 0x7fffffffdc90
+rip: 0x0010061e
+
+[Memory]
+default: 00
+MEM: 00100704, 1, t, 
+MEM: 00100705, 1, t,
+MEM: 00100706, 1, t,
+MEM: 00100707, 1, t,
+MEM: 00100708, 1, t,
+MEM: 00100709, 1, t,
+MEM: 0010070a, 1, t,
+MEM: 0010070b, 1, t,
+MEM: 0010070c, 1, t,
+MEM: 0010070d, 1, t,
+MEM: 0010070e, 1, t,
+MEM: 0010070f, 1, t,
+MEM: 00100710, 1, t,
+MEM: 00100711, 1, t,
+MEM: 00100712, 1, t,
+MEM: 00100713, 1, t,
+MEM: 00100714, 1, t,
+MEM: 00100715, 1, t,
+MEM: 00100716, 1, t,
+MEM: 00100717, 1, t,
+MEM: 00100718, 1, t,
+MEM: 00100719, 1, t,
+MEM: 0010071a, 1, t,
+MEM: 0010071b, 1, t,
+MEM: 0010071c, 1, t,
+MEM: 0010071d, 1, t,
+MEM: 0010071e, 1, t,
+
+[Break]
+E:BP 0010067a
+E:R 00100704-0010071e
+
+

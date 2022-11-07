@@ -1,0 +1,29 @@
+[Registers]
+#General
+a: 00
+x: 00
+y: 00
+s: FF
+pc: E000
+#Flags
+N: 0
+V: 0
+B: 0
+D: 0
+I: 1
+Z: 0
+C: 0
+
+[Memory]
+default: 00
+MEM: D010, 1, c, t, D0, D2, C9, CE, D4, A0, A2, C8, C5, CC, CC, CF, A0, D7, CF, D2, CC, C4, A2, 8D
+MEM: D011, 1, c, 80
+MEM: D0F2, 1, c, 0
+MEM: E000, 1, c, 
+MEM: E2B6, 1, c, 
+
+[Break]
+E:R ConsoleInput
+E:W BASIC_ConsoleOutput_Mirror
+E:BP E2B6
+

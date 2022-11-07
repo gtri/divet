@@ -1,0 +1,1 @@
+This is an alternative Z80 core implementation that uses a Java core with a Python wrapper.  It was used to flush out bugs in the pure-Python implementation.  Tainted value tracking was never added, but otherwise it was integrated into the framework (at some point in time).

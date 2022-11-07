@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar $(dirname $0)/jython-standalone-2.7.2.jar "$@"
