@@ -1,3 +1,21 @@
+What is DIVET?
+==============
+
+DIVET is an emulator plugin for Ghidra to allow for dynamic analysis using the static binaries analyzed within the database itself. All identified functions, symbols, and names are maintained. This minimizes the environment switching from static analysis to a different emulation environment or live hardware debugging.
+
+Features
+--------
+- Dynamic analysis of algorithms without a debugger
+- Forward and reverse execution
+- Breakpoints and conditionals
+- Tainted value tracing
+- Execution tracing and visualization
+- Emulated memory with banking
+- Generalized emulator framework
+- P-code emulation
+- Scripting support
+
+
 Installation
 ============
 
@@ -63,8 +81,8 @@ The break conditions panel is a list of breakpoints when to pause continuous exe
 |  `<condition>` | `<=` \| `<` \| `==` \| `>=` \| `>`             |
 | `<watchValue>` | `<item>` \| `<item>` `<tainted>`               |
 |   `<tainted>`  | `T` \| `U`                                     |
-    - Example:  to add a breakpoint for when register A is less than 0x30, the script would be `REG A < 0x30`
-    - Example:  to add a breakpoint for when memory address is between 0x8 and 0x56, the script would be `
+    - Example:  to add a breakpoint for when register A is less than 0x30, the script would be `BP REG A < 0x30`
+    - Example:  to add a breakpoint for when memory address 0x123 in the MEM bank is less than 0x8 , the script would be `R MEM 0x123 < 0x8"
 	
 
 
