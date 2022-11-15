@@ -82,7 +82,7 @@ The break conditions panel is a list of breakpoints when to pause continuous exe
 | `<watchValue>` | `<item>` \| `<item>` `<tainted>`               |
 |   `<tainted>`  | `T` \| `U`                                     |
     - Example:  to add a breakpoint for when register A is less than 0x30, the script would be `BP REG A < 0x30`
-    - Example:  to add a breakpoint for when memory address 0x123 in the MEM bank is less than 0x8 , the script would be `R MEM 0x123 < 0x8"
+    - Example:  to add a breakpoint for when memory address 0x123 in the MEM bank is less than 0x8 , the script would be `R MEM 0x123 < 0x8`
 	
 
 
