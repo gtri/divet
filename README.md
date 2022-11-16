@@ -1,7 +1,7 @@
 What is DIVET?
 ==============
 
-DIVET is an emulator plugin for Ghidra to allow for dynamic analysis using the static binaries analyzed within the database itself. All identified functions, symbols, and names are maintained. This minimizes the environment switching from static analysis to a different emulation environment or live hardware debugging.
+DIVET is an emulator plugin for Ghidra to allow for dynamic analysis of the Ghidra database itself. All identified functions, symbols, and names are maintained. This minimizes the environment switching from static analysis to a different emulation environment or live hardware debugging.
 
 Features
 --------
@@ -15,6 +15,21 @@ Features
 - P-code emulation
 - Scripting support
 
+Supported Architectures
+-----------------------
+- Zilog Z80
+- Motorola 68000 (M68k)
+- MSP430
+- MOS 6502
+- ARM32
+- GDB Bridging
+- P-code Emulation (all other architectures)
+
+P-code Emulation
+-----------------------
+P-code is Ghidra's internal representation of an imported binary's instructions, used to construct all the data relationships and function flow used during static analysis. By using Pcode as an emulation platform, general emulation of any imported binary is possible, as long as Ghidra supports the architecture.
+
+The biggest drawback is that this relies on the correct P-code implementation of the original instruction set. Most modern architectures should be relatively error-free, but some older architectures contain errors that can prevent perfect emulation. For example, the SBC instruction on the 6502 incorrectly sets the sign of the carry bit in the P-code representation (at the time of writing).
 
 Installation
 ============
